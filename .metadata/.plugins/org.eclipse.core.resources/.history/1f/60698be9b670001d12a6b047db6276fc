@@ -1,0 +1,5 @@
+package project.electro.server.repository;
+
+public interface UserRepository {
+
+}

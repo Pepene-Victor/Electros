@@ -1,0 +1,85 @@
+package project.electro.server.entities;
+
+import java.time.LocalDateTime;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import project.electro.server.enums.PasswordStatusEnum;
+import project.electro.server.enums.RoleEnum;
+
+@Entity
+@Table(name = "users")
+public class User {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@OneToOne(mappedBy = "email", cascade = CascadeType.REMOVE)
+	private String username;
+	
+	private String password;
+	
+	@Column(name = "created_date")
+	private LocalDateTime createdDate;
+	
+	private RoleEnum role;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public RoleEnum getRole() {
+		return role;
+	}
+
+	public void setRole(RoleEnum role) {
+		this.role = role;
+	}
+
+	public PasswordStatusEnum getPasswordStatus() {
+		return passwordStatus;
+	}
+
+	public void setPasswordStatus(PasswordStatusEnum passwordStatus) {
+		this.passwordStatus = passwordStatus;
+	}
+
+	@Column(name = "password_status")
+	private PasswordStatusEnum passwordStatus;
+}

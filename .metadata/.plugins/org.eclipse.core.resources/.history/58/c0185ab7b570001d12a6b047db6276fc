@@ -1,0 +1,35 @@
+package project.electro.server.entities;
+
+import java.time.LocalDateTime;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import project.electro.server.enums.PasswordStatusEnum;
+import project.electro.server.enums.RoleEnum;
+
+@Table(name = "users")
+public class User {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@OneToOne(mappedBy = "email", cascade = CascadeType.REMOVE)
+	private String username;
+	
+	private String password;
+	
+	@Column(name = "created_date")
+	private LocalDateTime createdDate;
+	
+	private RoleEnum role;
+	
+	@Column(name = "password_status")
+	private PasswordStatusEnum passwordStatus;
+}
