@@ -1,0 +1,5 @@
+package project.electro.server.dtos;
+
+public class ProductDto {
+
+}

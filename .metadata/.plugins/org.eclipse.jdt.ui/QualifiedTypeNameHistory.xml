@@ -17,8 +17,6 @@
     <fullyQualifiedTypeName name="javax.persistence.Entity"/>
     <fullyQualifiedTypeName name="javax.persistence.Enumerated"/>
     <fullyQualifiedTypeName name="project.electro.server.enums.PasswordStatusEnum"/>
-    <fullyQualifiedTypeName name="project.electro.server.entities.BaseEntity"/>
-    <fullyQualifiedTypeName name="javax.persistence.Column"/>
     <fullyQualifiedTypeName name="javax.persistence.OneToOne"/>
     <fullyQualifiedTypeName name="javax.persistence.FetchType"/>
     <fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
@@ -26,4 +24,12 @@
     <fullyQualifiedTypeName name="javax.persistence.MappedSuperclass"/>
     <fullyQualifiedTypeName name="project.electro.server.entities.BaseUserEntity"/>
     <fullyQualifiedTypeName name="javax.persistence.EnumType"/>
+    <fullyQualifiedTypeName name="project.electro.server.entities.BaseEntity"/>
+    <fullyQualifiedTypeName name="project.electro.server.dtos.BaseUserEntityDto"/>
+    <fullyQualifiedTypeName name="project.electro.server.dtos.BaseEntityDto"/>
+    <fullyQualifiedTypeName name="project.electro.server.controllers.BaseEntityController"/>
+    <fullyQualifiedTypeName name="javax.validation.constraints.Size"/>
+    <fullyQualifiedTypeName name="javax.validation.constraints.Email"/>
+    <fullyQualifiedTypeName name="javax.persistence.Column"/>
+    <fullyQualifiedTypeName name="javax.validation.constraints.NotNull"/>
 </qualifiedTypeNameHistroy>
