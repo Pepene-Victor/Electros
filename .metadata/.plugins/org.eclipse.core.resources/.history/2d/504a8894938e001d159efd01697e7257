@@ -1,0 +1,35 @@
+package project.electro.server.services;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import project.electro.server.dtos.AdministratorDto;
+import project.electro.server.dtos.BaseUserEntityDto;
+import project.electro.server.entities.Administrator;
+import project.electro.server.entities.User;
+import project.electro.server.repository.AdministratorRepository;
+import project.electro.server.repository.UserRepository;
+import project.electro.server.utils.Utils;
+
+public abstract class BaseUserEntityService<T extends BaseUserEntityDto> {
+
+	@Autowired
+	private AdministratorRepository administratorRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private Utils utils;
+	
+	public T create(T administratorDto, String username) throws Exception {
+		return null;
+	}
+	
+	public T update(T administratorDto) throws Exception {
+		return null;
+	}
+	
+}

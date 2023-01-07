@@ -1,0 +1,55 @@
+package project.electro.server.services;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import project.electro.server.dtos.ProductDto;
+import project.electro.server.entities.Product;
+import project.electro.server.exceptions.ProductExistsByIdException;
+import project.electro.server.repository.ProductRepository;
+
+@Service
+@Transactional
+public class ProductService {
+	
+	@Autowired
+	private ProductRepository productRepository;
+
+	
+	
+	public ProductDto createProductDto(ProductDto productDto) throws ProductExistsByIdException {
+		if(productRepository.findById(productDto.getId()).isPresent())
+			throw new ProductExistsByIdException(productDto.getId());
+		else {
+			Product product = convertToProduct(productDto);
+			product = productRepository.save(product);
+			return convertToProductDto(product);
+		}
+		
+	}
+
+
+
+	private ProductDto convertToProductDto(Product product) {
+		ProductDto productDto = new ProductDto();
+		productDto.setId(product.getId());
+		productDto.setCreatedDate(product.getCreatedDate());
+		productDto.setFabricationYear(product.getFabricationYear());
+		productDto.setImage(product.getImage());
+		productDto.setPrice(product.getPrice());
+		productDto.setProductName(product.getProductName());
+		productDto.setStock(product.getStock());
+		productDto.setUnitMeasurement(product.getUnitMeasurement());
+		productDto.setWarrantyYears(product.get);
+		return null;
+	}
+
+
+
+	private Product convertToProduct(ProductDto productDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

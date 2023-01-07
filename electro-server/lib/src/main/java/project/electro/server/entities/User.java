@@ -13,7 +13,7 @@ import project.electro.server.enums.RoleEnum;
 @Table(name = "users")
 public class User extends BaseEntity{
 	
-	@Column(name = "username")
+	@Column(name = "username", unique = true)
 	private String username;
 	
 	@Column(name = "password")

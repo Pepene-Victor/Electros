@@ -1,8 +1,11 @@
 package project.electro.server.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,17 +15,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import project.electro.server.dtos.BaseEntityDto;
 
-public interface BaseEntityController<T extends BaseEntityDto> {
+public abstract class BaseEntityController<T extends BaseEntityDto> {
 
-	@PostMapping("/create")
-	T create(@Valid @RequestBody T entity);
+	@PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	T create(@Valid @RequestBody T entity) throws Exception {
+		return null;
+	}
 	
-	@PutMapping("/create")
-	T update(@Valid @RequestBody T entity);
+	@PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	T update(@Valid @RequestBody T entity) throws Exception {
+		return null;
+	}
 	
-	@DeleteMapping("/delete/{id}")
-	void delete(@NotNull @PathVariable Long id);
+	@DeleteMapping(value = "/delete/{id}")
+	void delete(@NotNull @PathVariable Long id) throws Exception {
+	}
 	
-	@GetMapping("/findById/{id}")
-	T findById(@PathVariable Long id);
+	@GetMapping("/find-by-id/{id}")
+	T findById(@PathVariable Long id) {
+		return null;
+	}
+	
+	@GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<T> getAll() {
+		return null;
+	}
 }

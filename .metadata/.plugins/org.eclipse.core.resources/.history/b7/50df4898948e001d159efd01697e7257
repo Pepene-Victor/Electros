@@ -1,0 +1,20 @@
+package project.electro.server.services;
+
+import project.electro.server.dtos.BaseUserEntityDto;
+
+public abstract class BaseUserEntityService<T extends BaseUserEntityDto> {
+	
+	public T create(T entityDto, String username) throws Exception {
+		return null;
+	}
+	
+	public T update(T entityDto) throws Exception {
+		return null;
+	}
+	
+	public T findByUsername(String username) {
+		
+		return null;
+	}
+	
+}

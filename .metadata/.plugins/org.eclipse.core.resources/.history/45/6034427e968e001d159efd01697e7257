@@ -1,0 +1,20 @@
+package project.electro.server.services;
+
+import project.electro.server.dtos.BaseUserEntityDto;
+
+public interface BaseUserEntityService<T extends BaseUserEntityDto> {
+	
+	public T create(T entityDto, String username) throws Exception {
+		return null;
+	}
+	
+	public T update(T entityDto) throws Exception {
+		return null;
+	}
+	
+	public T findByUser(String username) {
+		
+		return null;
+	}
+	
+}

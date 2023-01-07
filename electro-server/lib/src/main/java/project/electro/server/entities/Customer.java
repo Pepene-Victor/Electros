@@ -13,11 +13,8 @@ import project.electro.server.enums.StatusEnum;
 @Table(name = "customers")
 public class Customer extends BaseUserEntity{
 	
-	@Column(name = "first_name")
-	private String firstName;
-	
-	@Column(name = "last_name")
-	private String lastName;
+	@Column(name = "name")
+	private String name;
 	
 	@Enumerated(value = EnumType.STRING)
 	private StatusEnum status;
@@ -29,21 +26,14 @@ public class Customer extends BaseUserEntity{
 	@Column(name = "age")
 	private int age;
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
 
 	public StatusEnum getStatus() {
 		return status;

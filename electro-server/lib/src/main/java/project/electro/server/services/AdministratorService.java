@@ -16,7 +16,7 @@ import project.electro.server.repository.UserRepository;
 
 @Service
 @Transactional
-public class AdministratorService {
+public class AdministratorService implements BaseUserEntityService<AdministratorDto>{
 
 	@Autowired
 	private AdministratorRepository administratorRepository;
@@ -24,11 +24,22 @@ public class AdministratorService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public AdministratorDto create(AdministratorDto administratorDto, String username) throws Exception {
+	@Override
+	public AdministratorDto findByUser(String username) {
 		
+		Optional<User> user = userRepository.findByUsername(username);
+		if(user.isPresent()) {
+			Administrator admin = administratorRepository.findByUserId(user.get().getId());
+			return convertToAdminDto(admin);
+		}
+		return null;
+	}
+	@Override
+	public AdministratorDto create(AdministratorDto administratorDto, String username) throws Exception {
 		Optional<User> user = userRepository.findByUsername(username);
 		try {
 			administratorDto.setCreatedDate(LocalDateTime.now());
+			administratorDto.setEmail(username);
 			Administrator admin = convertToAdmin(administratorDto);
 			
 			if(user.isPresent()) {
@@ -40,10 +51,20 @@ public class AdministratorService {
 			
 			throw new Exception("Can't create details for user: " + user.get().getUsername());
 		}
-
 	}
-	
-
+	@Override
+	public AdministratorDto update(AdministratorDto administratorDto) throws Exception {
+		try {
+			Optional<Administrator> adminToUpdate = administratorRepository.findById(administratorDto.getId());
+			administratorDto.setId(adminToUpdate.get().getId());
+			Administrator admin  = convertToAdmin(administratorDto);
+			admin = administratorRepository.save(admin);
+			return convertToAdminDto(admin);
+		}catch(Exception e){
+			
+			throw new Exception("Update failed");
+		}
+	}
 	private Administrator convertToAdmin(AdministratorDto administratorDto) {
 		
 		Administrator admin = new Administrator();
@@ -55,6 +76,7 @@ public class AdministratorService {
 		admin.setPersonalPhoneNumber(administratorDto.getPersonalPhoneNumber());
 		admin.setStatus(administratorDto.getStatus());
 		admin.setUser(administratorDto.getUser());
+		admin.setId(administratorDto.getId());
 		return admin;
 	}
 	private AdministratorDto convertToAdminDto(Administrator administrator) {
@@ -68,6 +90,7 @@ public class AdministratorService {
 		adminDto.setPersonalPhoneNumber(administrator.getPersonalPhoneNumber());
 		adminDto.setStatus(administrator.getStatus());
 		adminDto.setUser(administrator.getUser());
+		adminDto.setId(administrator.getId());
 		return adminDto;
 	}
 	

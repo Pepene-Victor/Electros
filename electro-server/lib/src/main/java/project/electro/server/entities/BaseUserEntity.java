@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 @MappedSuperclass
 public abstract class BaseUserEntity extends BaseEntity{
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	

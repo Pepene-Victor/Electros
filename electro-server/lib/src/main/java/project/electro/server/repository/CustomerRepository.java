@@ -6,4 +6,6 @@ import project.electro.server.entities.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long>{
 
+	Customer findByUserId(Long id);
+
 }

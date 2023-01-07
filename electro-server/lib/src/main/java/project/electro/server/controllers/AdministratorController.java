@@ -1,42 +1,42 @@
 package project.electro.server.controllers;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.electro.server.dtos.AdministratorDto;
 import project.electro.server.enums.RoleEnum;
+import project.electro.server.services.AdministratorService;
 
 @RestController
 @Secured(RoleEnum.Code.ADMINISTRATOR)
 @RequestMapping("/admin")
-public class AdministratorController implements BaseEntityController<AdministratorDto>{
+public class AdministratorController implements BaseUserEntityController<AdministratorDto>{
 
+	@Autowired
+	private AdministratorService administratorService;
+	
 	@Override
-	public AdministratorDto create(@Valid AdministratorDto entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AdministratorDto update(@Valid AdministratorDto entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public AdministratorDto findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void delete(@NotNull Long id) {
-		// TODO Auto-generated method stub
+	public AdministratorDto create(@Valid AdministratorDto entity, String username) throws Exception {
 		
+		return administratorService.create(entity, username);
 	}
+
+	@Override
+	public AdministratorDto update(@Valid AdministratorDto entity) throws Exception {
+		
+		return  administratorService.update(entity);
+	}
+
+	@Override
+	public AdministratorDto findByUser(String username) {
+		
+		return administratorService.findByUser(username);
+	}
+
+
 
 }

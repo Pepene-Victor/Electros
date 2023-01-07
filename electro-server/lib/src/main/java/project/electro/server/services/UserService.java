@@ -1,6 +1,8 @@
 package project.electro.server.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -30,7 +32,30 @@ public class UserService {
 	
 	private static final Logger LOGGER = Logger.getLogger(UserService.class.getName());
 
-	public UserDto create(UserDto userDto) throws UserExistsByUsernameException {
+	public List<UserDto> getAllUsers(){
+		
+		List<User> users = userRepository.findAll();
+		List<UserDto> usersDto = new ArrayList<UserDto>();
+		if(users.size() != 0) {
+			users.forEach(user -> {
+				usersDto.add(convertToUserDto(user));
+			});
+			
+		}
+		
+		return usersDto;
+	}
+	
+	public UserDto findByUsername(String username) {
+		
+		Optional<User> user = userRepository.findByUsername(username);
+		
+		if(user.isPresent())
+			return convertToUserDto(user.get());
+		return null;
+	}
+	
+	public UserDto register(UserDto userDto) throws Exception {
 		
 		userDto.setCreatedDate(LocalDateTime.now());
 		
@@ -51,7 +76,7 @@ public class UserService {
 		
 	}
 	
-	public UserDto updateUserName(UserDto userDto) throws UserExistsByUsernameException{
+	public UserDto updateUserName(UserDto userDto) throws Exception{
 		
 		String username = userDto.getUsername();
 		
@@ -60,12 +85,14 @@ public class UserService {
 		
 		User user =  convertToUser(userDto);
 		user = userRepository.save(user);
+		
+		Utils.createActivity(ActivityTypeEnum.UPDATE, "user " + user.getUsername()+  " updated");
 
 		return convertToUserDto(user);
 		
 	}
 	
-	public UserDto updateUserPassword(UserDto userDto) {
+	public UserDto updateUserPassword(UserDto userDto) throws Exception {
 		
 		String newPassword = userDto.getPassword();
 		
@@ -74,17 +101,18 @@ public class UserService {
 		
 		User user =  convertToUser(userDto);
 		user = userRepository.save(user);
-		
+		Utils.createActivity(ActivityTypeEnum.UPDATE, "user " + user.getUsername()+  " updated");
 		return convertToUserDto(user);
 		
 	}
-	public void deleteUser(Long id) {
+	public void deleteUser(Long id) throws Exception {
 		
 		userRepository.deleteById(id);
 		Optional<User> user = userRepository.findById(id);
 		if (userRepository.existsByUsername(user.get().getUsername()) == false) {
 			
 			LOGGER.info("Delete was successful");
+			Utils.createActivity(ActivityTypeEnum.DELETE, "user " + user.get().getUsername()+  " deleted");
 		}
 		else
 			LOGGER.warning("Delete has failed for user: " + user.get().getUsername());
@@ -99,6 +127,7 @@ public class UserService {
 		user.setPasswordStatus(userDto.getPasswordStatus());
 		user.setUsername(userDto.getUsername());
 		user.setRole(userDto.getRole());
+		user.setId(userDto.getId());
 		
 		return user;
 	}
@@ -107,10 +136,10 @@ public class UserService {
 		
 		UserDto userDto = new UserDto();
 		userDto.setCreatedDate(user.getCreatedDate());
-		userDto.setPassword(user.getPassword());
 		userDto.setPasswordStatus(user.getPasswordStatus());
 		userDto.setUsername(user.getUsername());
 		userDto.setRole(user.getRole());
+		userDto.setId(user.getId());
 		
 		return userDto;
 	}

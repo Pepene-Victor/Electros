@@ -5,8 +5,8 @@ INDEX VERSION 1.131+C:\Users\Victor\Desktop\Proiect WEB\electro\.metadata\.plugi
 2757668711.index
 1223710732.index
 3941649407.index
-322237256.index
 133765725.index
+322237256.index
 15901526.index
 1277668411.index
 132676438.index
@@ -28,8 +28,8 @@ INDEX VERSION 1.131+C:\Users\Victor\Desktop\Proiect WEB\electro\.metadata\.plugi
 987683500.index
 480552822.index
 2047139060.index
-1073648730.index
 1028204268.index
+1073648730.index
 1724754020.index
 3523756138.index
 2787574968.index
@@ -53,9 +53,9 @@ INDEX VERSION 1.131+C:\Users\Victor\Desktop\Proiect WEB\electro\.metadata\.plugi
 697825682.index
 191480036.index
 3891982580.index
+3144007964.index
 3640250600.index
 498988184.index
-3144007964.index
 2406700034.index
 1239603955.index
 3213516791.index
@@ -85,11 +85,11 @@ INDEX VERSION 1.131+C:\Users\Victor\Desktop\Proiect WEB\electro\.metadata\.plugi
 3687041585.index
 313672870.index
 3867830683.index
-2333241516.index
 4180822305.index
+2333241516.index
 538685777.index
-478413004.index
 2246296975.index
+478413004.index
 3872933925.index
 2467461634.index
 1296965158.index

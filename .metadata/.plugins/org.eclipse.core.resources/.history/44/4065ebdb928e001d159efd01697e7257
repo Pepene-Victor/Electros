@@ -1,0 +1,63 @@
+package project.electro.server.services;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.support.Repositories;
+
+import project.electro.server.dtos.T;
+import project.electro.server.dtos.BaseUserEntityDto;
+import project.electro.server.entities.Administrator;
+import project.electro.server.entities.User;
+import project.electro.server.repository.AdministratorRepository;
+import project.electro.server.repository.UserRepository;
+import project.electro.server.utils.Utils;
+
+public abstract class BaseUserEntityService<T extends BaseUserEntityDto, V extends Repositories> {
+
+	@Autowired
+	private V repo;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private Utils utils;
+	
+	public T create(T administratorDto, String username) throws Exception {
+		
+		Optional<User> user = userRepository.findByUsername(username);
+		try {
+			administratorDto.setCreatedDate(LocalDateTime.now());
+			Administrator admin = convertToAdmin(administratorDto);
+			
+			if(user.isPresent()) {
+				admin.setUser(user.get());
+			}
+			admin = repo.save(admin);
+			return convertToAdminDto(admin);
+		}catch(Exception e){
+			
+			throw new Exception("Can't create details for user: " + user.get().getUsername());
+		}
+
+	}
+	
+	public T update(T administratorDto) throws Exception {
+		
+		try {
+			Optional<Administrator> adminToUpdate = repo.findById(administratorDto.getId());
+			administratorDto.setId(adminToUpdate.get().getId());
+			Administrator admin  = convertToAdmin(administratorDto);
+			admin = repo.save(admin);
+			return convertToAdminDto(admin);
+		}catch(Exception e){
+			
+			throw new Exception("Can't update details for user: " + utils.getLoggedUser().getUsername());
+		}
+
+		
+	}
+	
+}

@@ -9,3 +9,7 @@
 1673093438190	Rename local variable 'userDto'
 1673096818026	Rename local variable 'administratorDto'
 1673096839288	Rename local variable 'admin'
+1673098159808	Rename local variable 'admin'
+1673100851045	Delete element
+1673112149662	Delete element
+1673112934184	Extract local variable 'findById'

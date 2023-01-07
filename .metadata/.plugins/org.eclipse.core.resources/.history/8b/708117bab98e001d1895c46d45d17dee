@@ -1,0 +1,37 @@
+package project.electro.server.controllers;
+
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import project.electro.server.dtos.ActivityDto;
+import project.electro.server.dtos.UserDto;
+
+@RestController
+@RequestMapping("/user")
+public class UserController extends BaseEntityController<UserDto>{
+
+	@Override
+	UserDto create(@Valid UserDto entity) {
+		// TODO Auto-generated method stub
+		return super.create(entity);
+	}
+
+	@Override
+	void delete(@NotNull Long id) {
+		// TODO Auto-generated method stub
+		super.delete(id);
+	}
+
+	@Override
+	public List<ActivityDto> getAll() {
+		// TODO Auto-generated method stub
+		return super.getAll();
+	}
+
+
+}

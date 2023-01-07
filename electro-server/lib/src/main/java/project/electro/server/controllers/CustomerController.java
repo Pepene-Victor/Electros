@@ -1,42 +1,37 @@
 package project.electro.server.controllers;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.electro.server.dtos.CustomerDto;
-import project.electro.server.enums.RoleEnum;
+import project.electro.server.services.CustomerService;
 
 @RestController
 @RequestMapping("/customer")
-public class CustomerController implements BaseEntityController<CustomerDto>{
+public class CustomerController implements BaseUserEntityController<CustomerDto>{
 
+	@Autowired
+	private CustomerService customerService;
+	
 	@Override
-	public CustomerDto create(@Valid CustomerDto entity) {
-		
-		return null;
+	public CustomerDto create(@Valid CustomerDto entity, String username) throws Exception {
+		// TODO Auto-generated method stub
+		return customerService.create(entity, username);
 	}
 
 	@Override
-	public CustomerDto update(@Valid CustomerDto entity) {
+	public CustomerDto update(@Valid CustomerDto entity) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return customerService.update(entity);
 	}
 
 	@Override
-	public void delete(@NotNull Long id) {
+	public CustomerDto findByUser(String username) {
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	@Secured(RoleEnum.Code.ADMINISTRATOR)
-	public CustomerDto findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return customerService.findByUser(username);
 	}
 
 }

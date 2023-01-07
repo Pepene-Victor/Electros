@@ -1,0 +1,67 @@
+package project.electro.server.services;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import project.electro.server.dtos.CustomerDto;
+import project.electro.server.entities.Administrator;
+import project.electro.server.entities.User;
+import project.electro.server.repository.UserRepository;
+import project.electro.server.utils.Utils;
+
+public class CustomerService implements BaseUserEntityService<CustomerDto>{
+
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private Utils utils;
+	
+	@Override
+	public CustomerDto create(CustomerDto entityDto, String username) throws Exception {
+		
+		Optional<User> user = userRepository.findByUsername(username);
+		try {
+			entityDto.setCreatedDate(LocalDateTime.now());
+			Administrator admin = convertToAdmin(administratorDto);
+			
+			if(user.isPresent()) {
+				admin.setUser(user.get());
+			}
+			admin = administratorRepository.save(admin);
+			return convertToAdminDto(admin);
+		}catch(Exception e){
+			
+			throw new Exception("Can't create details for user: " + user.get().getUsername());
+		}
+	}
+
+	@Override
+	public CustomerDto update(CustomerDto entityDto) throws Exception {
+		try {
+			Optional<Administrator> adminToUpdate = administratorRepository.findById(administratorDto.getId());
+			entityDto.setId(adminToUpdate.get().getId());
+			Administrator admin  = convertToAdmin(administratorDto);
+			admin = administratorRepository.save(admin);
+			return convertToAdminDto(admin);
+		}catch(Exception e){
+			
+			throw new Exception("Can't update details for user: " + utils.getLoggedUser().getUsername());
+		}
+
+	}
+
+	@Override
+	public CustomerDto findByUser(String username) {
+		Optional<User> user = userRepository.findByUsername(username);
+		if(user.isPresent()) {
+			Administrator admin = administratorRepository.findByUserId(user.get().getId());
+			return convertToAdminDto(admin);
+		}
+		return null;
+
+	}
+
+}

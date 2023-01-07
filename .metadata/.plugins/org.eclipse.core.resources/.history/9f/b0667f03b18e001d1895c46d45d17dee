@@ -1,0 +1,32 @@
+package project.electro.server.services;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import project.electro.server.dtos.ProductDto;
+import project.electro.server.entities.Product;
+import project.electro.server.exceptions.ProductExistsByIdException;
+import project.electro.server.repository.ProductRepository;
+
+@Service
+@Transactional
+public class ProductService {
+	
+	@Autowired
+	private ProductRepository productRepository;
+
+	
+	
+	public ProductDto createProductDto(ProductDto productDto) throws ProductExistsByIdException {
+		if(productRepository.findById(productDto.getId()).isPresent())
+			throw new ProductExistsByIdException(productDto.getId());
+		else {
+			Product product = convertToProduct(productDto);
+			
+			return convertToProductDto(productRepository.save(product));
+		}
+		
+	}
+}

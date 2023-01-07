@@ -5,44 +5,43 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.electro.server.dtos.ProductDto;
+import project.electro.server.services.ProductService;
 
 @RestController
 @RequestMapping("/products")
-public class ProductController implements BaseEntityController<ProductDto>{
+public class ProductController extends BaseEntityController<ProductDto>{
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<ProductDto> getAll(){
-		return null;
-	}
+	@Autowired
+	private ProductService productService;
 	
 	@Override
-	public ProductDto create(@Valid ProductDto entity) {
+	ProductDto create(@Valid ProductDto entity) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return productService.createProductDto(entity);
 	}
 
 	@Override
-	public ProductDto update(@Valid ProductDto entity) {
+	ProductDto update(@Valid ProductDto entity) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return productService.updateProductDto(entity);
 	}
 
 	@Override
-	public void delete(@NotNull Long id) {
+	void delete(@NotNull Long id) throws Exception {
 		// TODO Auto-generated method stub
-		
+		productService.delete(id);
 	}
 
 	@Override
-	public ProductDto findById(Long id) {
+	public List<ProductDto> getAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return productService.getAll();
 	}
+
 	
 }
