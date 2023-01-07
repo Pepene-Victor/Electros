@@ -1,0 +1,7 @@
+package project.electro.server.controllers;
+
+import project.electro.server.dtos.CustomerDto;
+
+public class CustomerController implements BaseEntityController<CustomerDto>{
+
+}

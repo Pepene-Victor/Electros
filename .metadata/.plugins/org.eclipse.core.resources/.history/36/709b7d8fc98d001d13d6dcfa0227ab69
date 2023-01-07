@@ -1,0 +1,20 @@
+package project.electro.server.enums;
+
+import org.aspectj.apache.bcel.classfile.Code;
+
+public enum RoleEnum {
+	
+	ADMINISTRATOR(Code.ADMINISTRATOR),
+	
+	CUSTOMER(Code.CUSTOMER);
+	
+	private final int value;
+	
+	RoleEnum(int value) {
+		this.value = value;
+	}
+	
+	public int getValue() {
+		return value;
+	}
+}

@@ -1,0 +1,40 @@
+package project.electro.server.services;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import project.electro.server.dtos.AdministratorDto;
+import project.electro.server.entities.Administrator;
+import project.electro.server.repository.AdministratorRepository;
+import project.electro.server.repository.UserRepository;
+
+@Service
+@Transactional
+public class AdministratorService {
+
+	@Autowired
+	private AdministratorRepository administratorRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	public AdministratorDto createStockByProductId(AdministratorDto administratorDto, String username) {
+		
+		try {
+			Administrator admin = convertToAdmin(administratorDto);
+			User user = userRepo
+			return convertToStockDto(this.stockRepository.save(stock));
+		}catch(Exception e){
+			
+		}
+
+	}
+
+	private Administrator convertToAdmin(AdministratorDto administratorDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}

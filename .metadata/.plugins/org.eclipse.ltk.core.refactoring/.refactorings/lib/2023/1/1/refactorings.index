@@ -1,3 +1,11 @@
 1672856648486	Encapsulate field 'user'
 1672856654253	Encapsulate field 'email'
 1672856827482	Rename type 'Customer'
+1673002333647	Delete element
+1673008543612	Rename type 'CostumerController'
+1673009399016	Delete element
+1673015565242	Delete element
+1673092376394	Rename type 'UserExistsByEmailException'
+1673093438190	Rename local variable 'userDto'
+1673096818026	Rename local variable 'administratorDto'
+1673096839288	Rename local variable 'admin'

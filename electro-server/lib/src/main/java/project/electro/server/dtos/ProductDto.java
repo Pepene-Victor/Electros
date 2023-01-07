@@ -20,6 +20,16 @@ public class ProductDto extends BaseEntityDto{
 	private String unitMeasurement;
 	
 	private int warrantyYears;
+	
+	private byte[] image;
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 
 	public String getProductName() {
 		return productName;

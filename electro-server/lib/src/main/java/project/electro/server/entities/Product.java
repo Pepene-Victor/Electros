@@ -25,6 +25,17 @@ public class Product extends BaseEntity{
 	
 	@Column(name = "warranty_years")
 	private int warrantyYears;
+	
+	@Column(name = "image")
+	private byte[] image;
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 
 	public String getProductName() {
 		return productName;

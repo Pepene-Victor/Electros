@@ -1,0 +1,9 @@
+package project.electro.server.controllers;	
+
+import project.electro.server.dtos.BaseUserEntityDto;
+
+public interface BaseUserEntityController<T extends BaseUserEntityDto> {
+
+
+	
+}

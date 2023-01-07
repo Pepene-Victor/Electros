@@ -1,0 +1,14 @@
+package project.electro.server.exceptions;
+
+
+
+public class UserExistsByUsernameException extends Exception{
+
+	private static final long serialVersionUID = 1L;
+
+	public UserExistsByUsernameException(String email) {
+		super("User already exists with email:  "+ email +"!!!");
+		
+	}
+	
+}
