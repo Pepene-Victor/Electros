@@ -29,10 +29,12 @@ public class ActivityController extends BaseEntityController<ActivityDto>{
 	}
 
 	@Override
-	public List<ActivityDto> getAll() {
+	public List<ActivityDto> getAll(Integer pageNumber, Integer pageSize) {
 		
-		return activityService.getAllActivities();
+		return activityService.getAllActivities(pageNumber, pageSize);
 	}
+
+
 
 
 }

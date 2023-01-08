@@ -9,6 +9,9 @@ import java.util.logging.Logger;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +35,12 @@ public class UserService {
 	
 	private static final Logger LOGGER = Logger.getLogger(UserService.class.getName());
 
-	public List<UserDto> getAllUsers(){
+	public List<UserDto> getAllUsers(Integer pageNumber, Integer pageSize){
+
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		
-		List<User> users = userRepository.findAll();
+		Page<User> pageUsers = userRepository.findAll(pageable);
+		List<User> users = pageUsers.getContent();
 		List<UserDto> usersDto = new ArrayList<UserDto>();
 		if(users.size() != 0) {
 			users.forEach(user -> {
@@ -53,6 +59,17 @@ public class UserService {
 		if(user.isPresent())
 			return convertToUserDto(user.get());
 		return null;
+	}
+	
+	public UserDto getLoggedUser() throws Exception {
+		
+		Utils utils = new Utils();
+		
+		String username = utils.getLoggedUser().getUsername();
+		UserDto loggedUser = findByUsername(username);
+		
+		return loggedUser;
+		
 	}
 	
 	public UserDto register(UserDto userDto) throws Exception {

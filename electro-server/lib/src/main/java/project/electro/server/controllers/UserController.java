@@ -8,8 +8,10 @@ import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,21 +38,29 @@ public class UserController extends BaseEntityController<UserDto>{
 		service.deleteUser(id);
 	}
 
+	
 	@Override
 	@Secured(RoleEnum.Code.ADMINISTRATOR)
-	public List<UserDto> getAll() {
+	public List<UserDto> getAll(Integer pageNumber, Integer pageSize) {
 		
-		return service.getAllUsers();
+		return service.getAllUsers(pageNumber, pageSize);
 	}
+	
 	@PutMapping(value = "/update/username", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public UserDto updateUsername(UserDto userDto) throws Exception {
+	public UserDto updateUsername(@Valid @RequestBody UserDto userDto) throws Exception {
 		
 		return service.updateUserName(userDto);
 	}
+
+
 	@PutMapping(value = "/update/password", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public UserDto updatePassword(UserDto userDto) throws Exception {
+	public UserDto updatePassword(@Valid @RequestBody UserDto userDto) throws Exception {
 		
 		return service.updateUserPassword(userDto);
+	}
+	@GetMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE)
+	public UserDto getLoggedUser() throws Exception {
+		return service.getLoggedUser();
 	}
 
 

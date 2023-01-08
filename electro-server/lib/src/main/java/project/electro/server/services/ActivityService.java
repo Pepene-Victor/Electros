@@ -8,6 +8,9 @@ import java.util.logging.Logger;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import project.electro.server.dtos.ActivityDto;
@@ -23,9 +26,12 @@ public class ActivityService {
 	
 	private static final Logger LOGGER = Logger.getLogger(ActivityService.class.getName());
 
-	public List<ActivityDto> getAllActivities(){
+	public List<ActivityDto> getAllActivities(Integer pageNumber, Integer pageSize){
 		
-		List<Activity> activities = activityRepository.findAll();
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		
+		Page<Activity> pageActivities = activityRepository.findAll(pageable);
+		List<Activity> activities = pageActivities.getContent();
 		List<ActivityDto> activitiesDto = new ArrayList<ActivityDto>();
 		if(activities.size() != 0) {
 			activities.forEach(activity -> {

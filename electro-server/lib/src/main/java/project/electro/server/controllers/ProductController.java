@@ -21,27 +21,29 @@ public class ProductController extends BaseEntityController<ProductDto>{
 	
 	@Override
 	ProductDto create(@Valid ProductDto entity) throws Exception {
-		// TODO Auto-generated method stub
+		
 		return productService.createProductDto(entity);
 	}
 
 	@Override
 	ProductDto update(@Valid ProductDto entity) throws Exception {
-		// TODO Auto-generated method stub
+		
 		return productService.updateProductDto(entity);
 	}
 
 	@Override
 	void delete(@NotNull Long id) throws Exception {
-		// TODO Auto-generated method stub
+	
 		productService.delete(id);
 	}
 
 	@Override
-	public List<ProductDto> getAll() {
-		// TODO Auto-generated method stub
-		return productService.getAll();
+	public List<ProductDto> getAll(Integer pageNumber, Integer pageSize) {
+		
+		return productService.getAll(pageNumber, pageSize);
 	}
+
+
 
 	
 }
