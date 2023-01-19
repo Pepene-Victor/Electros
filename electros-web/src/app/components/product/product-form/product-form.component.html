@@ -1,0 +1,53 @@
+  <p-card>
+    <ng-template pTemplate="title">
+      Product
+    </ng-template>
+    <span class="p-error" *ngIf="formValidation==='INVALID'">Fields are required without SUPPLIER</span>
+    <ng-template class="ceva" pTemplate="content" [formGroup]="productForm">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="product-name">Product Name</label>
+          <input id="product-name" type="text" pInputText formControlName="productName">
+          <span class="p-error" *ngIf="productForm.controls.productName.hasError('maxlength')">
+                Max length: 100
+              </span>
+        </div>
+        <div class="p-field">
+          <label for="fabrication-year">Fabrication Year</label>
+          <input id="fabrication-year" type="number" pInputText formControlName="fabricationYear">
+          <span class="p-error" *ngIf="productForm.controls.fabricationYear.hasError('maxlength')">
+                Max length: 4
+              </span>
+        </div>
+        <div class="p-field">
+          <label for="stock">Stock</label>
+          <input id="stock" type="number" pInputText formControlName="stock">
+        </div>
+        <div class="p-field">
+          <label for="price">Price</label>
+          <input id="price" type="text" pInputText formControlName="price">
+          <span class="p-error" *ngIf="productForm.controls.price.hasError('pattern')">
+                Invalid value! Ex: 20.99
+              </span>
+          <span class="p-error">{{showError}}</span>
+        </div>
+        <div class="p-field">
+          <label for="unit">Unit</label>
+          <input id="unit" type="text" pInputText formControlName="unitMeasurement">
+          <span class="p-error" *ngIf="productForm.controls.unitMeasurement.hasError('maxlength')">
+                Max length: 2
+              </span>
+        </div>
+        <div class="p-field">
+          <label for="warranty-years">Warranty Years</label>
+          <input id="warranty-years" type="number" pInputText formControlName="warrantyYears">
+          <span class="p-error" *ngIf="productForm.controls.warrantyYears.hasError('maxlength')">
+                Max length: 2
+              </span>
+        </div>
+      </div>
+      <button pButton pRipple label="Update" class="p-button-text blue" *ngIf="editProduct" [disabled]="formValidation==='INVALID'"(click)="updateProduct()"></button>
+      <button pButton pRipple label="Create" class="p-button-text blue" *ngIf="!editProduct" [disabled]="formValidation==='INVALID'"(click)="createProduct()"></button>
+      <button pButton pRipple label="Cancel" class="p-button-text blue" routerLink="/products"></button>
+    </ng-template>
+  </p-card>
