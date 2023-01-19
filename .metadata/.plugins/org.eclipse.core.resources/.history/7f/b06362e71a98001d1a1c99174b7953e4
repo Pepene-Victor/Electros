@@ -1,0 +1,34 @@
+package project.electro.server.controllers;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import project.electro.server.dtos.OrderDTO;
+
+public class OrderController extends BaseEntityController<OrderDTO>{
+
+	@Override
+	OrderDTO create(@Valid OrderDTO entity) throws Exception {
+		
+	}
+
+	@Override
+	OrderDTO update(@Valid OrderDTO entity) throws Exception {
+		
+	}
+
+	@Override
+	OrderDTO findById(Long id) {
+		
+	}
+
+	@Override
+	public List<OrderDTO> getAll(Integer pageNumber, Integer pageSize) {
+		
+		return super.getAll(pageNumber, pageSize);
+	}
+
+	
+	
+}

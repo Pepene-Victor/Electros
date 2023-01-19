@@ -1,0 +1,42 @@
+package project.electro.server.services;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import project.electro.server.dtos.UserDto;
+import project.electro.server.entities.User;
+import project.electro.server.repository.OrderRepository;
+
+@Transactional
+@Service
+public class OrderService {
+	
+	@Autowired
+	private OrderRepository orderRepository;
+	
+	public List<OrderDto> getAllUsers(Integer pageNumber, Integer pageSize){
+
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		
+		Page<User> pageUsers = orderRepository.findAll(pageable);
+		List<User> order = pageUsers.getContent();
+		List<OrderDto> usersDto = new ArrayList<OrderDto>();
+		if(users.size() != 0) {
+			users.forEach(order -> {
+				usersDto.add(convertToOrderDto(order));
+			});
+			
+		}
+		
+		return usersDto;
+	}
+
+}

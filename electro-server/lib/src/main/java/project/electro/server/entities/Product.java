@@ -1,8 +1,13 @@
 package project.electro.server.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "products")
@@ -17,7 +22,7 @@ public class Product extends BaseEntity{
 	@Column(name = "stock")
 	private Long stock;
 	
-	@Column(name = "price")
+	@Column(name = "price", scale = 2, nullable = false)
 	private Double price;
 	
 	@Column(name = "u_m")
@@ -28,6 +33,21 @@ public class Product extends BaseEntity{
 	
 	@Column(name = "image")
 	private byte[] image;
+	
+	@ManyToMany
+	@JoinTable(
+	  name = "product_order", 
+	  joinColumns = @JoinColumn(name = "product_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "order_id"))
+	private Set<Order> orders;
+
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
 
 	public byte[] getImage() {
 		return image;

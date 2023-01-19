@@ -1,0 +1,26 @@
+package project.electro.server.entities;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "orders")
+public class Order extends BaseUserEntity{
+	
+	@Column(name = "products_count")
+	private Integer productsCount;
+
+	public Integer getProductsCount() {
+		return productsCount;
+	}
+
+	public void setProductsCount(Integer productsCount) {
+		this.productsCount = productsCount;
+	}
+	
+	
+	
+}

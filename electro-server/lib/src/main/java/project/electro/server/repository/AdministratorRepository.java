@@ -8,5 +8,6 @@ import project.electro.server.entities.Administrator;
 public interface AdministratorRepository extends JpaRepository<Administrator, Long>{
 
 	Administrator findByUserId(Long id); 
+	
 
 }

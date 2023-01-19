@@ -1,6 +1,8 @@
 package project.electro.server.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import project.electro.server.dtos.ProductDto;
 import project.electro.server.entities.Product;
@@ -46,10 +49,17 @@ public class ProductService {
 		return productsDto;
 	}
 	
-	public ProductDto createProductDto(ProductDto productDto) throws Exception {
+	public ProductDto createProductDto(ProductDto productDto, MultipartFile file) throws Exception {
 		if(productRepository.findById(productDto.getId()).isPresent())
 			throw new ProductExistsByIdException(productDto.getId());
 		else {
+			try {
+				productDto.setImage(Base64.getEncoder().encode(file.getBytes()));
+			}catch(IOException e) {
+				
+				e.printStackTrace();
+			}
+			
 			Product product = convertToProduct(productDto);
 			product = productRepository.save(product);
 			Utils.createActivity(ActivityTypeEnum.CREATE, "product with id " + product.getId()+  " created");

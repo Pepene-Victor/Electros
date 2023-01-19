@@ -1,6 +1,5 @@
 package project.electro.server.dtos;
-
-import javax.persistence.Column;
+	
 import javax.validation.constraints.NotNull;
 
 public class ProductDto extends BaseEntityDto{
@@ -13,7 +12,6 @@ public class ProductDto extends BaseEntityDto{
 	@NotNull
 	private Long stock;
 	
-	@Column(name = "price", scale = 2, nullable = false)
 	@NotNull
 	private Double price;
 	
