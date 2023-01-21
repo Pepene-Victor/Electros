@@ -8,6 +8,8 @@ import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { UserDto } from '../models/user-dto';
+import {AdministratorDto} from "../models/administrator-dto";
+import {CustomerDto} from "../models/customer-dto";
 
 /**
  * User Controller
@@ -37,6 +39,27 @@ class UserControllerService extends __BaseService {
     localStorage.setItem("accountDetailsType", JSON.stringify(accountDetailsType));
   }
 
+  getAccountDetailsAdmin(){
+    let accountDetailsAdmin = localStorage.getItem("accountDetailsAdmin")
+    if(!!accountDetailsAdmin){
+      return JSON.parse(accountDetailsAdmin);
+    }
+  }
+
+  setAccountDetailsAdmin(accountDetailsAdmin: AdministratorDto){
+    localStorage.setItem("accountDetailsAdmin", JSON.stringify(accountDetailsAdmin));
+  }
+  getAccountDetailsCustomer(){
+    let accountDetailsCustomer = localStorage.getItem("accountDetailsCustomer")
+    if(!!accountDetailsCustomer){
+      return JSON.parse(accountDetailsCustomer);
+    }
+  }
+
+  setAccountDetailsCustomer(accountDetailsCustomer: CustomerDto){
+    localStorage.setItem("accountDetailsCustomer", JSON.stringify(accountDetailsCustomer));
+  }
+
   getLoggedAccount(){
     let loggedAccount = localStorage.getItem("user");
     if(!!loggedAccount) {
@@ -57,6 +80,17 @@ class UserControllerService extends __BaseService {
 
   setIsLoggedIn(isLoggedIn: boolean){
     localStorage.setItem("loginStatus", JSON.stringify(isLoggedIn));
+  }
+
+  getIsAdmin(){
+    let isAdmin = localStorage.getItem("loginStatus");
+    if(!!isAdmin) {
+      return JSON.parse(isAdmin);
+    }
+  }
+
+  setIsAdmin(isAdmin: boolean){
+    localStorage.setItem("loginStatus", JSON.stringify(isAdmin));
   }
 
   constructor(
@@ -127,7 +161,7 @@ class UserControllerService extends __BaseService {
     __body = entity;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + `/user/create`,
+      this.rootUrl + `/user/register`,
       __body,
       {
         headers: __headers,

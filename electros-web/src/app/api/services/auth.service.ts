@@ -11,12 +11,12 @@ export class AuthService {
   constructor(private _httpClient: HttpClient, private _userService: UserControllerService) { }
 
   login(uploadData: FormData): Observable<HttpResponse<string>> {
-    return this._httpClient.post("http://localhost:8080/login", uploadData,
+    return this._httpClient.post("http://localhost:8090/login", uploadData,
       { responseType: 'text', observe: 'response', withCredentials: true }) as Observable<HttpResponse<string>>;
 
   }
   logout(): Observable<HttpResponse<string>>{
-    return this._httpClient.post('http://localhost:8080/logout', {},
+    return this._httpClient.post('http://localhost:8090/logout', {},
       {withCredentials: true}) as Observable<HttpResponse<string>>;
   }
 }

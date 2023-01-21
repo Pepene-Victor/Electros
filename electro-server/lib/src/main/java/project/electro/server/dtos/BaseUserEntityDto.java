@@ -8,11 +8,10 @@ import project.electro.server.entities.User;
 
 public abstract class BaseUserEntityDto extends BaseEntityDto{
 
-	@NotNull
+	
 	private User user;
 	
 	@Email
-	@NotNull
 	private String email;
 
 	public User getUser() {

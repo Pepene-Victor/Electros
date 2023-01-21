@@ -6,7 +6,9 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.electro.server.dtos.ActivityDto;
@@ -21,15 +23,16 @@ public class ActivityController extends BaseEntityController<ActivityDto>{
 
 	@Autowired
 	private ActivityService activityService;
-	
+
 	@Override
-	void delete(@NotNull Long id) throws Exception {
+	void delete(@NotNull @PathVariable Long id) throws Exception {
 		
 		activityService.delete(id);
 	}
 
+	@Secured(RoleEnum.Code.ADMINISTRATOR)
 	@Override
-	public List<ActivityDto> getAll(Integer pageNumber, Integer pageSize) {
+	public List<ActivityDto> getAll(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
 		
 		return activityService.getAllActivities(pageNumber, pageSize);
 	}

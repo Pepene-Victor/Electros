@@ -1,0 +1,23 @@
+package project.electro.server;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.MultipartFilter;
+
+@SpringBootApplication
+public class ElectroMain {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ElectroMain.class, args);
+	}
+  @Bean(name = "multipartResolver")
+  public CommonsMultipartResolver createMultipartResolver() {
+	    CommonsMultipartResolver resolver=new CommonsMultipartResolver();
+	    resolver.setDefaultEncoding("utf-8");
+	    return resolver;
+	}
+
+}

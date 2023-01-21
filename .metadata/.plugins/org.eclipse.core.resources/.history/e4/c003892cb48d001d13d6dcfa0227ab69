@@ -1,5 +1,0 @@
-package project.electro.server.repository;
-
-public interface ProductRepository {
-
-}

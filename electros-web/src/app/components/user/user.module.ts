@@ -10,6 +10,15 @@ import {AccountDetailsComponent} from "./account-details/account-details.compone
 import {ChangeUserDetailsComponent} from "./change-user-details/change-user-details.component";
 import {RippleModule} from "primeng/ripple";
 import { UserFormComponent } from './user-form/user-form.component';
+import { UserListComponent } from './user-list/user-list.component';
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {DialogModule} from "primeng/dialog";
+import {CardModule} from "primeng/card";
+import {ProductRoutingModule} from "../product/product-routing.module";
+import {ToastModule} from "primeng/toast";
+import {TableModule} from "primeng/table";
+import { ActivitiesListComponent } from './activities-list/activities-list.component';
+import { CartComponent } from './cart/cart.component';
 
 
 
@@ -17,10 +26,14 @@ import { UserFormComponent } from './user-form/user-form.component';
     declarations: [
         ChangeUserDetailsComponent,
         AccountDetailsComponent,
-        UserFormComponent
+        UserFormComponent,
+        UserListComponent,
+        ActivitiesListComponent,
+        CartComponent
     ],
     exports: [
-        UserFormComponent
+        UserFormComponent,
+        CartComponent
     ],
     imports: [
         CommonModule,
@@ -31,7 +44,11 @@ import { UserFormComponent } from './user-form/user-form.component';
         ReactiveFormsModule,
         HttpClientModule,
         FormsModule,
-        RippleModule
+        RippleModule,
+        DialogModule,
+        CardModule,
+        ToastModule,
+        TableModule,
     ]
 })
 export class UserModule { }

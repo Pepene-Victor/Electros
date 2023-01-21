@@ -1,0 +1,35 @@
+<title>Cart</title>
+<p-table #dt class="table" [value]="products" [rows]="10" [paginator]="true"  [rowHover]="true"
+         [showCurrentPageReport]="true" [globalFilterFields]="['productName','id']"
+         currentPageReportTemplate="{first} to {last} of {totalRecords} records">
+  <ng-template pTemplate="caption">
+    <div>
+      <h2>Cart products list</h2>
+      <div>
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" (input)="dt.filterGlobal(getValue($event), 'contains')" placeholder="Search" />
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Count</th>
+
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-product>
+    <tr>
+      <td>{{product.productName}}</td>
+      <td>{{product.price}}</td>
+      <td><input type="number" value="1" ></td>
+    </tr>
+
+  </ng-template>
+</p-table>
+<button pButton (click)="order()">
+  <i pRipple class="pi pi-cart-plus green" ></i>Order
+</button>
+
+

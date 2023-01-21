@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {FormBuilder, FormControlStatus, FormGroup, Validators} from "@angular/forms";
-import {first, Subscription} from "rxjs";
+import {first, Subscription, switchMap} from "rxjs";
 import {UserControllerService} from "../../api/services/user-controller.service";
 import {AuthService} from "../../api/services/auth.service";
 import {UserDto} from "../../api/models/user-dto";
@@ -37,23 +37,23 @@ export class LoginComponent implements OnInit {
     const uploadData = new FormData()
     uploadData.append('username', this.loginForm.get('username')?.value);
     uploadData.append('password', this.loginForm.get('password')?.value);
-    this._subscriptions.push(this._loginService.login(uploadData).pipe(first()).subscribe({
-      next: () => {
+    this._subscriptions.push(this._loginService.login(uploadData).pipe(switchMap(() => this._userService.getLoggedUserUsingGET())
+    ).subscribe({
+      next: (user: UserDto) => {
         console.log("Login Success!");
+        if(user != null){
+          this._userService.setLoggedAccount(user);
+          if(user.role == "ADMINISTRATOR"){
+            this._userService.setIsAdmin(true);
+          }
+        }
+        this._router.navigate(['/home'])
+          .then(() => {
+            window.location.reload();
+          });
       },
       error: () => {{this.showError = true}}
     }));
-    this._subscriptions.push(this._userService.getLoggedUserUsingGET().subscribe({
-      next: (user: UserDto) => {
-        if(user != null){
-          this._userService.setLoggedAccount(user);
-          this._router.navigate(['/home'])
-            .then(() => {
-              window.location.reload();
-            });
-        }
-      }
-    }))
 
   }
 

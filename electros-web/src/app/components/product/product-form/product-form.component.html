@@ -2,8 +2,9 @@
     <ng-template pTemplate="title">
       Product
     </ng-template>
-    <span class="p-error" *ngIf="formValidation==='INVALID'">Fields are required without SUPPLIER</span>
-    <ng-template class="ceva" pTemplate="content" [formGroup]="productForm">
+    <span class="p-error" *ngIf="formValidation==='INVALID'">All fields are required</span>
+    <ng-template class="ceva" pTemplate="content" >
+      <form [formGroup]="productForm" enctype="multipart/form-data">
       <div class="p-fluid">
         <div class="p-field">
           <label for="product-name">Product Name</label>
@@ -45,9 +46,15 @@
                 Max length: 2
               </span>
         </div>
+        <div class="p-field">
+          <label for="warranty-years">Image</label>
+          <input id="image" type="file" pInputText (change)="getFile($event)">
+        </div>
       </div>
       <button pButton pRipple label="Update" class="p-button-text blue" *ngIf="editProduct" [disabled]="formValidation==='INVALID'"(click)="updateProduct()"></button>
       <button pButton pRipple label="Create" class="p-button-text blue" *ngIf="!editProduct" [disabled]="formValidation==='INVALID'"(click)="createProduct()"></button>
-      <button pButton pRipple label="Cancel" class="p-button-text blue" routerLink="/products"></button>
+        <button pButton pRipple label="Reset" class="p-button-text blue" *ngIf="!editProduct" (click)="resetForm()"></button>
+      </form>
     </ng-template>
   </p-card>
+

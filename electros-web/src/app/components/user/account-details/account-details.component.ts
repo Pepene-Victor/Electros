@@ -5,6 +5,7 @@ import {AdministratorControllerService} from "../../../api/services/administrato
 import {CustomerControllerService} from "../../../api/services/customer-controller.service";
 import {AdministratorDto} from "../../../api/models/administrator-dto";
 import {CustomerDto} from "../../../api/models/customer-dto";
+import {UserDto} from "../../../api/models/user-dto";
 
 
 @Component({
@@ -26,22 +27,27 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let loggedAccount = this._userService.getLoggedAccount();
+    const loggedAccount = this._userService.getLoggedAccount()
+    console.log(loggedAccount);
     if(loggedAccount.role == "ADMINISTRATOR"){
       this.isAdmin = true;
-      this._subscriptions.push(this._adminService.findByUserUsingGET(loggedAccount.username).subscribe({
+      const username = loggedAccount.username;
+      this._subscriptions.push(this._adminService.findByUserUsingGET(username).subscribe({
         next: (admin: AdministratorDto) => {
           this.name = admin.firstName + " " + admin.lastName;
           this.email = admin.email;
           this.company = admin.company;
           this.personalPhoneNumber = admin.personalPhoneNumber;
+          this._userService.setAccountDetailsAdmin(admin);
         }
       }));
     }else{
-      this._subscriptions.push(this._customerService.findByUserUsingGET1(loggedAccount.username).subscribe({
+      const username = loggedAccount.username;
+      this._subscriptions.push(this._customerService.findByUserUsingGET1(username).subscribe({
         next: (customer: CustomerDto) => {
           this.name = customer.name
           this.email = customer.email
+          this._userService.setAccountDetailsCustomer(customer);
         }
       }))
     }
@@ -54,5 +60,9 @@ export class AccountDetailsComponent implements OnInit {
 
   changePassword(){
     this._userService.setAccountDetailsType('password');
+  }
+
+  changeDetails(){
+    this._userService.setAccountDetailsType('details');
   }
 }

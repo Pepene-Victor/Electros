@@ -21,6 +21,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
+import { interceptorProviders } from './interceptors/interceptors';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 // @ts-ignore
 @NgModule({
@@ -50,7 +52,11 @@ import { RegisterComponent } from './components/register/register.component';
     StepsModule,
     MenubarModule
   ],
-  providers: [],
+  providers: [
+    interceptorProviders,
+    ConfirmationService,
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

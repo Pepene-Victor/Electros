@@ -1,0 +1,31 @@
+
+<title>Activities list</title>
+<p-table #dt class="table" [value]="activities" [rows]="10" [paginator]="true" [rowHover]="true"
+         [showCurrentPageReport]="true" [globalFilterFields]="['activityType','id']"
+         currentPageReportTemplate="{first} to {last} of {totalRecords} records" (onPage)="paginate($event)">
+  <ng-template pTemplate="caption">
+    <div>
+      <h2>Products list</h2>
+      <div>
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" (input)="dt.filterGlobal(getValue($event), 'contains')" placeholder="Search" />
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Id</th>
+      <th>Activity Type</th>
+      <th>Description</th>
+      <th>Created Date</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-activities>
+    <tr>
+      <td>{{activities.id}}</td>
+      <td>{{activities.activityType}}</td>
+      <td>{{activities.description}}</td>
+      <td>{{activities.createdDate}}</td>
+    </tr>
+  </ng-template>
+</p-table>

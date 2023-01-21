@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { BaseService as __BaseService } from '../base-service';
 import { ApiConfiguration as __Configuration } from '../api-configuration';
-import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
-import { Observable as __Observable } from 'rxjs';
+import {StrictHttpResponse, StrictHttpResponse as __StrictHttpResponse} from '../strict-http-response';
+import {Observable, Observable as __Observable} from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { AdministratorDto } from '../models/administrator-dto';
@@ -37,7 +37,7 @@ class AdministratorControllerService extends __BaseService {
    *
    * @return OK
    */
-  createUsingPOST1Response(params: AdministratorControllerService.CreateUsingPOST1Params): __Observable<__StrictHttpResponse<AdministratorDto>> {
+  createUsingPOST1Response(params: { entity: AdministratorDto; username: string | undefined }): Observable<StrictHttpResponse<AdministratorDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -70,7 +70,7 @@ class AdministratorControllerService extends __BaseService {
    *
    * @return OK
    */
-  createUsingPOST1(params: AdministratorControllerService.CreateUsingPOST1Params): __Observable<AdministratorDto> {
+  createUsingPOST1(params: { entity: AdministratorDto; username: string | undefined }): Observable<AdministratorDto> {
     return this.createUsingPOST1Response(params).pipe(
       __map(_r => _r.body as AdministratorDto)
     );
@@ -81,7 +81,7 @@ class AdministratorControllerService extends __BaseService {
    * @param username username
    * @return OK
    */
-  findByUserUsingGETResponse(username: string): __Observable<__StrictHttpResponse<AdministratorDto>> {
+  findByUserUsingGETResponse(username: string|undefined): __Observable<__StrictHttpResponse<AdministratorDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -108,7 +108,7 @@ class AdministratorControllerService extends __BaseService {
    * @param username username
    * @return OK
    */
-  findByUserUsingGET(username: string): __Observable<AdministratorDto> {
+  findByUserUsingGET(username: string | undefined): Observable<AdministratorDto> {
     return this.findByUserUsingGETResponse(username).pipe(
       __map(_r => _r.body as AdministratorDto)
     );
@@ -146,7 +146,7 @@ class AdministratorControllerService extends __BaseService {
    * @param entity entity
    * @return OK
    */
-  updateUsingPUT1(entity: AdministratorDto): __Observable<AdministratorDto> {
+  updateUsingPUT1(entity: AdministratorDto): Observable<AdministratorDto> {
     return this.updateUsingPUT1Response(entity).pipe(
       __map(_r => _r.body as AdministratorDto)
     );

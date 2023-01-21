@@ -4,7 +4,7 @@ import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/com
 import { BaseService as __BaseService } from '../base-service';
 import { ApiConfiguration as __Configuration } from '../api-configuration';
 import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
-import {BehaviorSubject, Observable as __Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Observable as __Observable, Subject} from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { ProductDto } from '../models/product-dto';
@@ -27,6 +27,27 @@ class ProductControllerService extends __BaseService {
   productDialog$: Subject<boolean> = new Subject<boolean>();
   product$: BehaviorSubject<ProductDto> = new BehaviorSubject<ProductDto>({} as ProductDto);
   productToBeCreated$: BehaviorSubject<ProductDto> = new BehaviorSubject<ProductDto>({} as ProductDto);
+  getIsEdit(){
+    let isEdit = localStorage.getItem("isEdit");
+    if(!!isEdit) {
+      return JSON.parse(isEdit);
+    }
+  }
+
+  setIsEdit(isEdit: boolean){
+    localStorage.setItem("isEdit", JSON.stringify(isEdit));
+  }
+
+  getProductsToOrder(){
+    let productsToOrder = localStorage.getItem("isEdit");
+    if(!!productsToOrder) {
+      return JSON.parse(productsToOrder);
+    }
+  }
+
+  setProductsToOrder(productsToOrder: any){
+    localStorage.setItem("isEdit", JSON.stringify(productsToOrder));
+  }
 
   constructor(
     config: __Configuration,
@@ -165,7 +186,7 @@ class ProductControllerService extends __BaseService {
    *
    * @return OK
    */
-  createUsingPOST3(params: ProductControllerService.CreateUsingPOST3Params): __Observable<ProductDto> {
+  createUsingPOST3(params: { file: any; entity: ProductDto }): Observable<ProductDto> {
     return this.createUsingPOST3Response(params).pipe(
       __map(_r => _r.body as ProductDto)
     );
@@ -175,7 +196,7 @@ class ProductControllerService extends __BaseService {
    * delete
    * @param id id
    */
-  deleteUsingDELETE1Response(id: number): __Observable<__StrictHttpResponse<null>> {
+  deleteUsingDELETE1Response(id: number|undefined): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -201,7 +222,7 @@ class ProductControllerService extends __BaseService {
    * delete
    * @param id id
    */
-  deleteUsingDELETE1(id: number): __Observable<null> {
+  deleteUsingDELETE1(id: number|undefined): __Observable<null> {
     return this.deleteUsingDELETE1Response(id).pipe(
       __map(_r => _r.body as null)
     );
@@ -368,9 +389,9 @@ module ProductControllerService {
    * Parameters for updateUsingPUT3
    */
   export interface UpdateUsingPUT3Params {
-    stock: number;
-    productName: string;
-    price: number;
+    stock?: number;
+    productName?: string;
+    price?: number;
     warrantyYears?: number;
     unitMeasurement?: string;
     image?: ArrayBuffer;

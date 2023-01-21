@@ -14,16 +14,13 @@ import {AccordionModule} from "primeng/accordion";
 import {RippleModule} from "primeng/ripple";
 import {ToastModule} from "primeng/toast";
 import {StepsModule} from "primeng/steps";
-import { ProductStepsComponent } from './product-steps/product-steps.component';
-import { StockFormComponent } from './stock-form/stock-form.component';
 import {ProductFormComponent} from "./product-form/product-form.component";
+import {PaginatorModule} from "primeng/paginator";
 
 
 @NgModule({
   declarations: [ProductFormComponent,
-  ProductsListComponent,
-  ProductStepsComponent,
-  StockFormComponent
+  ProductsListComponent
   ],
   imports: [
     CommonModule,
@@ -36,11 +33,11 @@ import {ProductFormComponent} from "./product-form/product-form.component";
     RippleModule,
     ConfirmDialogModule,
     DialogModule,
-    TableModule,
     CardModule,
     ProductRoutingModule,
     ToastModule,
-    StepsModule
+    TableModule,
+    PaginatorModule,
   ],
 })
 export class ProductModule { }

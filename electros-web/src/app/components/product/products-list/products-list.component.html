@@ -1,7 +1,7 @@
 <title>Products list</title>
-<p-table #dt class="table" [value]="products" [rows]="10" [paginator]="true" [rowHover]="true"
-         [showCurrentPageReport]="true" [globalFilterFields]="['productName']"
-         currentPageReportTemplate="{first} to {last} of {totalRecords} records" (onPage)="paginate($event)">
+<p-table #dt class="table" [value]="products" [rows]="10" [paginator]="true"  [rowHover]="true"
+         [showCurrentPageReport]="true" [globalFilterFields]="['productName','id']"
+         currentPageReportTemplate="{first} to {last} of {totalRecords} records">
   <ng-template pTemplate="caption">
     <div>
       <h2>Products list</h2>
@@ -13,6 +13,7 @@
   </ng-template>
   <ng-template pTemplate="header">
     <tr>
+      <th>Id</th>
       <th>Name</th>
       <th>Price</th>
       <th>Stock</th>
@@ -20,11 +21,13 @@
       <th>Warranty Years</th>
       <th>Fabrication Year</th>
       <th></th>
-      <th><button pButton pRipple icon="pi pi-plus-circle" routerLink="/products/add-product"></button></th>
+      <th><button pButton pRipple icon="pi pi-plus-circle" *ngIf="isAdmin" (click)="addProduct()"></button></th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-product>
     <tr>
+      <td>{{product.id}}</td>
       <td>{{product.productName}}</td>
       <td>{{product.price}}</td>
       <td>{{product.stock}}</td>
@@ -32,20 +35,20 @@
       <td>{{product.warrantyYears}}</td>
       <td>{{product.fabricationYear}}</td>
       <td>
-        <i pRipple class="pi pi-pencil green" (click)="editProduct(product)"></i>
+        <i pRipple class="pi pi-pencil green" *ngIf="isAdmin" (click)="editProduct(product)"></i>
       </td>
       <td>
-        <i  pRipple class="pi pi-trash red" (click)="deleteProduct(product)"></i>
+        <i  pRipple class="pi pi-trash red" *ngIf="isAdmin" (click)="deleteProduct(product)"></i>
+      </td>
+      <td>
+        <i  pRipple class="pi pi-cart-plus green"  (click)="addProductToCart(product)"></i>
       </td>
     </tr>
   </ng-template>
 </p-table>
 
-<p-dialog [(visible)]="productDialog" [style]="{width: '500px'}" header="Edit Product" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="productDialog" [style]="{width: '500px'}" [modal]="true" styleClass="p-fluid">
   <app-product-form></app-product-form>
-  <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text blue" (click)="hideDialog()"></button>
-  </ng-template>
 </p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

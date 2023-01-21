@@ -27,11 +27,8 @@ export class HeaderComponent implements OnInit {
     this.navItemsAdmin = [
       {
         label: 'Products',
-        icon: 'pi pi-align-justify',
-        items: [
-          {label: 'Products', icon: 'pi pi-chevron-right', routerLink: '/products'},
-          {label: 'New product', icon: 'pi pi-plus', routerLink: '/products/add-product'}
-        ]
+        icon: 'pi pi-chevron-right',
+        routerLink: '/products'
       },
       {
         label: 'Account',
@@ -40,14 +37,24 @@ export class HeaderComponent implements OnInit {
       },
       {
         label: 'Users',
-        icon: 'pi pi-user',
-        routerLink: 'user/account-details'
-      }
+        icon: 'pi pi-users',
+        routerLink: 'user/users-list'
+      },
+      {
+        label: 'Cart',
+        icon: 'pi-shopping-cart',
+        routerLink: 'user/cart'
+      },
+      {
+        label: 'Activities',
+        icon: 'pi pi-chevron-right',
+        routerLink: 'user/activities-list'
+      },
     ];
     this.navItems = [
       {
         label: 'Products',
-        icon: 'pi pi-align-justify',
+        icon: 'pi pi-chevron-right',
         routerLink: '/products',
       },
       {
@@ -55,6 +62,11 @@ export class HeaderComponent implements OnInit {
         icon: 'pi pi-user',
         routerLink: 'user/account-details'
       },
+      {
+        label: 'Cart',
+        icon: 'pi pi-shopping-cart',
+        routerLink: 'user/cart'
+      }
 
     ];
     this._subscriptions.push(this._userService.getLoggedUserUsingGET().subscribe({

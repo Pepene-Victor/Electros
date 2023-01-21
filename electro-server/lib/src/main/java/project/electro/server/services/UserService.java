@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ import project.electro.server.enums.ActivityTypeEnum;
 import project.electro.server.enums.PasswordStatusEnum;
 import project.electro.server.exceptions.UserExistsByUsernameException;
 import project.electro.server.repository.UserRepository;
-import project.electro.server.utils.Utils;
+
 
 @Transactional
 @Service
@@ -32,6 +34,9 @@ public class UserService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private ActivityService activityService;
 	
 	private static final Logger LOGGER = Logger.getLogger(UserService.class.getName());
 
@@ -63,12 +68,18 @@ public class UserService {
 	
 	public UserDto getLoggedUser() throws Exception {
 		
-		Utils utils = new Utils();
+		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
-		String username = utils.getLoggedUser().getUsername();
-		UserDto loggedUser = findByUsername(username);
+		if(auth == null) {
+			
+			throw new Exception("No user logged in");
+		}
+		final String username = auth.getName();
 		
-		return loggedUser;
+		User user = userRepository.findByUsername(username).get();
+		
+		
+		return convertToUserDto(user);
 		
 	}
 	
@@ -87,7 +98,7 @@ public class UserService {
 		User user =  convertToUser(userDto);
 		user = userRepository.save(user);
 		
-		Utils.createActivity(ActivityTypeEnum.CREATE, "user " + user.getUsername()+  " created");
+		activityService.createActivity(ActivityTypeEnum.CREATE, "user " + user.getUsername()+  " created");
 
 		return convertToUserDto(user);
 		
@@ -103,7 +114,7 @@ public class UserService {
 		User user =  convertToUser(userDto);
 		user = userRepository.save(user);
 		
-		Utils.createActivity(ActivityTypeEnum.UPDATE, "user " + user.getUsername()+  " updated");
+		activityService.createActivity(ActivityTypeEnum.UPDATE, "user " + user.getUsername()+  " updated");
 
 		return convertToUserDto(user);
 		
@@ -118,21 +129,20 @@ public class UserService {
 		
 		User user =  convertToUser(userDto);
 		user = userRepository.save(user);
-		Utils.createActivity(ActivityTypeEnum.UPDATE, "user " + user.getUsername()+  " updated");
+		activityService.createActivity(ActivityTypeEnum.UPDATE, "user " + user.getUsername()+  " updated");
 		return convertToUserDto(user);
 		
 	}
 	public void deleteUser(Long id) throws Exception {
 		
 		userRepository.deleteById(id);
-		Optional<User> user = userRepository.findById(id);
-		if (userRepository.existsByUsername(user.get().getUsername()) == false) {
+		if (userRepository.existsById(id) == false) {
 			
 			LOGGER.info("Delete was successful");
-			Utils.createActivity(ActivityTypeEnum.DELETE, "user " + user.get().getUsername()+  " deleted");
+			activityService.createActivity(ActivityTypeEnum.DELETE, "user " + id+  " deleted");
 		}
 		else
-			LOGGER.warning("Delete has failed for user: " + user.get().getUsername());
+			LOGGER.warning("Delete has failed for user: " + id);
 	}
 	
 

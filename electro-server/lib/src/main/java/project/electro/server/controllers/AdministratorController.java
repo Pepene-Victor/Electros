@@ -4,7 +4,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.electro.server.dtos.AdministratorDto;
@@ -20,13 +22,13 @@ public class AdministratorController implements BaseUserEntityController<Adminis
 	private AdministratorService administratorService;
 	
 	@Override
-	public AdministratorDto create(@Valid AdministratorDto entity, String username) throws Exception {
+	public AdministratorDto create(@Valid @RequestBody AdministratorDto entity, @RequestParam String username) throws Exception {
 		
 		return administratorService.create(entity, username);
 	}
 
 	@Override
-	public AdministratorDto update(@Valid AdministratorDto entity) throws Exception {
+	public AdministratorDto update(@Valid @RequestBody AdministratorDto entity) throws Exception {
 		
 		return  administratorService.update(entity);
 	}

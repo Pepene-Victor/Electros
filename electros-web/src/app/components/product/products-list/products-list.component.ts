@@ -5,6 +5,7 @@ import {ProductControllerService} from "../../../api/services/product-controller
 import {FormBuilder} from "@angular/forms";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {Router} from "@angular/router";
+import {UserControllerService} from "../../../api/services/user-controller.service";
 
 @Component({
   selector: 'app-products-list',
@@ -14,34 +15,44 @@ import {Router} from "@angular/router";
 export class ProductsListComponent implements OnInit {
   private _subscriptions: Subscription [] = [];
   products: ProductDto [] = [];
+  productsToOrder: ProductDto [] = [];
   productDialog: boolean = false;
-
+  rows:number = 0;
+  isAdmin:boolean = false;
   constructor(private _fb: FormBuilder, private _productService: ProductControllerService,
               private _confirmationService: ConfirmationService, private _messageService: MessageService,
-              private _router: Router) {
+              private _router: Router, private _userService: UserControllerService) {
     this._getDialogProductStatus();
     this._updateProductInList();
   }
 
   ngOnInit(): void {
+    this.isAdmin = this._userService.getIsAdmin();
     const params = {
-      pageSize: 10,
-      currentPage: 0
+      pageSize: 100,
+      pageNumber: 0
     }
     this._subscriptions.push(this._productService.getAllUsingGET1(params).subscribe((products: ProductDto[]) =>{
       this.products = products;
-      console.log(this.products);
+      this.rows = params.pageSize;
     }));
+    this.productsToOrder = this._productService.getProductsToOrder();
   }
 
   ngOnDestroy(){
     this._subscriptions.forEach(sub => {
       sub.unsubscribe();
     })
+    this._productService.setProductsToOrder(this.productsToOrder)
   }
 
   getValue(event: Event): string {
     return (event.target as HTMLInputElement).value;
+  }
+
+  addProduct(){
+    this.productDialog = true;
+    this._productService.isEdit$.next(false);
   }
 
   editProduct(product: ProductDto) {
@@ -55,13 +66,12 @@ export class ProductsListComponent implements OnInit {
   }
 
   deleteProduct(product: ProductDto) {
-    const id: number = product.id;
     this._confirmationService.confirm({
       message: 'Are you sure you want to delete the product?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this._subscriptions.push(this._productService.deleteUsingDELETE1(id).subscribe({
+        this._subscriptions.push(this._productService.deleteUsingDELETE1(product.id).subscribe({
           next: () => {
             const index = this.products.indexOf(product);
             this.products.splice(index, 1);
@@ -90,13 +100,20 @@ export class ProductsListComponent implements OnInit {
   }
 
   paginate(event: any) {
-    const currentPage = event.page;
-    const params = {
-      pageSize: 10,
-      currentPage
-    };
-    this._subscriptions.push(this._productService.getAllUsingGET1(params).subscribe((products: ProductDto[]) =>{
-      this.products = products;
-    }));
+    // const pageNumber = event.page;
+    // const params = {
+    //   pageSize: 10,
+    //   pageNumber
+    // };
+    // this._subscriptions.push(this._productService.getAllUsingGET1(params).subscribe((products: ProductDto[]) =>{
+    //   products.forEach((product: ProductDto) => {
+    //     this.products.push(product);
+    //   })
+    // }));
+  }
+
+  addProductToCart(product: any) {
+
+    this.productsToOrder.push(product)
   }
 }

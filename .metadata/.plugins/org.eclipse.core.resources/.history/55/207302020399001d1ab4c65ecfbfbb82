@@ -1,0 +1,42 @@
+package project.electro.server.config;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+
+@Configuration
+@EnableJpaRepositories("project.electro.server.repository")
+@EnableTransactionManagement
+public class AppConfig {
+
+	  @Bean
+	  public FilterRegistrationBean filterBean() {
+			UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+			CorsConfiguration config = new CorsConfiguration();
+			config.setAllowCredentials(true);
+
+			List<String> originsPatterns = new ArrayList<>();
+			originsPatterns.add("http://localhost:4200");
+			config.setAllowedOriginPatterns(originsPatterns);
+
+			config.addAllowedHeader("*");
+			config.addAllowedMethod("*");
+			source.registerCorsConfiguration("/**", config);
+			FilterRegistrationBean bean = 
+					new FilterRegistrationBean<>();
+			bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+			return bean;
+	  }
+
+	  
+	
+}

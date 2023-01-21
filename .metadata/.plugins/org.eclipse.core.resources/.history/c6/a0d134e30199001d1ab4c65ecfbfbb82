@@ -1,0 +1,47 @@
+package project.electro.server.utils;
+
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
+import project.electro.server.dtos.UserDto;
+import project.electro.server.entities.Activity;
+import project.electro.server.enums.ActivityTypeEnum;
+import project.electro.server.repository.ActivityRepository;
+import project.electro.server.services.UserService;
+
+public class Utils {
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private static ActivityRepository activityRepository;
+
+	public static void createActivity(ActivityTypeEnum type, String description) throws Exception {
+		
+		Activity activity = new Activity();
+		activity.setActivityType(type);
+		activity.setCreatedDate(LocalDateTime.now());
+		activity.setDescription(description);
+	    try {
+		 activityRepository.save(activity);
+		} catch (Exception e) {
+			throw new Exception("Couldn't save activity");
+		}
+		
+	}
+	
+	public UserDto getLoggedUser() throws Exception {
+		
+		return userService.getLoggedUser();
+		
+	}
+
+
+	
+}

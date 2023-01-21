@@ -1,22 +1,22 @@
 <title>Account details</title>
 <div class="main-container">
   <h1>Account details</h1>
-    <div class="info-container">Username:
+    <div class="info-container">Name:
       <div>
         <span class="info">{{name}}</span>
-        <button pButton pRipple class="pi pi-pencil" type="button"(click)="changeUsername()" routerLink="/user/change-user-details" routerLinkActive="routerLinkActive"></button>
       </div>
     </div>
     <div class="info-container">Email:
       <div>
         <span class="info">{{email}}</span>
-        <button pButton pRipple class="pi pi-pencil" type="button" (click)="changeEmail()" routerLink="/user/change-user-details" routerLinkActive="routerLinkActive"></button>
+        <button pButton pRipple (click)="changeEmail()" routerLink="/user/change-user-details" routerLinkActive="routerLinkActive">Change email</button>
       </div>
     </div>
     <div class="info-container" *ngIf="isAdmin">Company:
       <div>
         <span class="info">{{company}}</span>
       </div>
+    </div>
       <div class="info-container" *ngIf="isAdmin">Phone Number:
         <div>
           <span class="info" >{{personalPhoneNumber}}</span>
@@ -26,6 +26,6 @@
     <span (click)="changePassword()" routerLink="/user/change-user-details" routerLinkActive="routerLinkActive">Change password</span>
   </div>
 </div>
-</div>
+
 
 

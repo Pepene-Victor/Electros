@@ -29,7 +29,7 @@ public abstract class BaseEntityController<T extends BaseEntityDto> {
 	}
 	
 	@DeleteMapping(value = "/delete/{id}")
-	void delete(@NotNull @PathVariable Long id) throws Exception {
+	void delete(@NotNull @PathVariable("id") Long id) throws Exception {
 	}
 	
 	@GetMapping("/find-by-id/{id}")

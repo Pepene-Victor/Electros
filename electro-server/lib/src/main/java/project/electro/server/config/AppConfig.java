@@ -3,6 +3,7 @@ package project.electro.server.config;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 @Configuration
 @EnableJpaRepositories("project.electro.server.repository")
@@ -36,5 +38,12 @@ public class AppConfig {
 			bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
 			return bean;
 	  }
+	  
+	  @Bean
+	  public StandardServletMultipartResolver multipartResolver() {
+	      return new StandardServletMultipartResolver();
+	  }
+
+	  
 	
 }

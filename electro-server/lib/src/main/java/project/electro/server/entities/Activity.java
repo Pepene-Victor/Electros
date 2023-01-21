@@ -2,6 +2,8 @@ package project.electro.server.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import project.electro.server.enums.ActivityTypeEnum;
@@ -14,6 +16,7 @@ public class Activity extends BaseEntity{
 	private String description;
 	
 	@Column(name = "activity_type")
+	@Enumerated(value = EnumType.STRING)
 	private ActivityTypeEnum activityType;
 
 	public String getDescription() {

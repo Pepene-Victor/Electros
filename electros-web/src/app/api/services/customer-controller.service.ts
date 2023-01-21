@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { BaseService as __BaseService } from '../base-service';
 import { ApiConfiguration as __Configuration } from '../api-configuration';
-import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
-import { Observable as __Observable } from 'rxjs';
+import {StrictHttpResponse, StrictHttpResponse as __StrictHttpResponse} from '../strict-http-response';
+import {Observable, Observable as __Observable} from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
 import { CustomerDto } from '../models/customer-dto';
@@ -81,7 +81,7 @@ class CustomerControllerService extends __BaseService {
    * @param username username
    * @return OK
    */
-  findByUserUsingGET1Response(username: string): __Observable<__StrictHttpResponse<CustomerDto>> {
+  findByUserUsingGET1Response(username: string | undefined): Observable<StrictHttpResponse<CustomerDto>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -108,7 +108,7 @@ class CustomerControllerService extends __BaseService {
    * @param username username
    * @return OK
    */
-  findByUserUsingGET1(username: string): __Observable<CustomerDto> {
+  findByUserUsingGET1(username: string | undefined): Observable<CustomerDto> {
     return this.findByUserUsingGET1Response(username).pipe(
       __map(_r => _r.body as CustomerDto)
     );

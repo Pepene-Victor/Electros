@@ -13,12 +13,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import project.electro.server.dtos.OrderDTO;
+import project.electro.server.dtos.ProductDto;
 import project.electro.server.entities.Order;
 import project.electro.server.enums.ActivityTypeEnum;
 import project.electro.server.exceptions.ProductExistsByIdException;
 import project.electro.server.repository.OrderRepository;
-import project.electro.server.utils.Utils;
+
 
 @Transactional
 @Service
@@ -26,6 +29,9 @@ public class OrderService {
 	
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private ActivityService activityService;
 	
 	private static final Logger LOGGER = Logger.getLogger(OrderService.class.getName());
 	
@@ -46,13 +52,16 @@ public class OrderService {
 		return ordersDto;
 	}
 	
-	public OrderDTO createOrderDto(OrderDTO orderDto) throws Exception {
+	public OrderDTO createOrderDto(String entity) throws Exception {
+		
+		OrderDTO orderDto = new ObjectMapper().readValue(entity, OrderDTO.class);
+		
 		if(orderRepository.findById(orderDto.getId()).isPresent())
 			throw new ProductExistsByIdException(orderDto.getId());
 		else {
 			Order order = convertToOrder(orderDto);
 			order = orderRepository.save(order);
-			Utils.createActivity(ActivityTypeEnum.CREATE, "product with id " + order.getId()+  " created");
+			activityService.createActivity(ActivityTypeEnum.CREATE, "product with id " + order.getId()+  " created");
 			return convertToOrderDto(order);
 		}
 		
@@ -64,7 +73,7 @@ public class OrderService {
 			orderDto.setId(orderToUpdate.get().getId());
 			Order order = convertToOrder(orderDto);
 			order = orderRepository.save(order);
-			Utils.createActivity(ActivityTypeEnum.UPDATE, "product with id " + order.getId()+  " updated");
+			activityService.createActivity(ActivityTypeEnum.UPDATE, "product with id " + order.getId()+  " updated");
 			return convertToOrderDto(order);
 		}
 		else {
@@ -80,7 +89,7 @@ public class OrderService {
 		if (orderRepository.existsById(order.get().getId()) == false) {
 			
 			LOGGER.info("Delete was successful");
-			Utils.createActivity(ActivityTypeEnum.DELETE, "product with id " + order.get().getId()+  " deleted");
+			activityService.createActivity(ActivityTypeEnum.DELETE, "product with id " + order.get().getId()+  " deleted");
 		}
 		else
 			LOGGER.warning("Delete has failed for user: " + order.get().getId());

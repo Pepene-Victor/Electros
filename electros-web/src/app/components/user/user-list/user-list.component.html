@@ -1,0 +1,32 @@
+<title>Users list</title>
+<p-table #dt class="table" [value]="users" [rows]="10" [paginator]="true" [rowHover]="true"
+         [showCurrentPageReport]="true" [globalFilterFields]="['username','id','role']"
+         currentPageReportTemplate="{first} to {last} of {totalRecords} records" (onPage)="paginate($event)">
+  <ng-template pTemplate="caption">
+    <div>
+      <h2>Products list</h2>
+      <div>
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" (input)="dt.filterGlobal(getValue($event), 'contains')" placeholder="Search" />
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Id</th>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Password Status</th>
+      <th>Created Date</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-users>
+    <tr>
+      <td>{{users.id}}</td>
+      <td>{{users.username}}</td>
+      <td>{{users.role}}</td>
+      <td>{{users.passwordStatus}}</td>
+      <td>{{users.createdDate}}</td>
+    </tr>
+  </ng-template>
+</p-table>

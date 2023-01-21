@@ -16,12 +16,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import project.electro.server.dtos.ProductDto;
 import project.electro.server.entities.Product;
 import project.electro.server.enums.ActivityTypeEnum;
 import project.electro.server.exceptions.ProductExistsByIdException;
 import project.electro.server.repository.ProductRepository;
-import project.electro.server.utils.Utils;
 
 @Service
 @Transactional
@@ -29,6 +30,9 @@ public class ProductService {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private ActivityService activityService;
 
 	private static final Logger LOGGER = Logger.getLogger(ProductService.class.getName());
 	
@@ -40,8 +44,8 @@ public class ProductService {
 		List<Product> products = pageProducts.getContent();
 		List<ProductDto> productsDto = new ArrayList<ProductDto>();
 		if(products.size() != 0) {
-			products.forEach(activity -> {
-				productsDto.add(convertToProductDto(activity));
+			products.forEach(product -> {
+				productsDto.add(convertToProductDto(product));
 			});
 			
 		}
@@ -49,22 +53,23 @@ public class ProductService {
 		return productsDto;
 	}
 	
-	public ProductDto createProductDto(ProductDto productDto, MultipartFile file) throws Exception {
-		if(productRepository.findById(productDto.getId()).isPresent())
-			throw new ProductExistsByIdException(productDto.getId());
-		else {
+	public ProductDto createProductDto(String productString, MultipartFile file) throws Exception {
+	
+		ProductDto productDto = new ObjectMapper().readValue(productString, ProductDto.class);
+		
+		if(file != null){
 			try {
 				productDto.setImage(Base64.getEncoder().encode(file.getBytes()));
 			}catch(IOException e) {
 				
 				e.printStackTrace();
 			}
+		}
 			
 			Product product = convertToProduct(productDto);
 			product = productRepository.save(product);
-			Utils.createActivity(ActivityTypeEnum.CREATE, "product with id " + product.getId()+  " created");
+			activityService.createActivity(ActivityTypeEnum.CREATE, "product with id " + product.getId()+  " created");
 			return convertToProductDto(product);
-		}
 		
 	}
 	
@@ -74,7 +79,7 @@ public class ProductService {
 			productDto.setId(productToUpdate.get().getId());
 			Product product = convertToProduct(productDto);
 			product = productRepository.save(product);
-			Utils.createActivity(ActivityTypeEnum.UPDATE, "product with id " + product.getId()+  " updated");
+			activityService.createActivity(ActivityTypeEnum.UPDATE, "product with id " + product.getId()+  " updated");
 			return convertToProductDto(product);
 		}
 		else {
@@ -86,14 +91,14 @@ public class ProductService {
 	public void delete(Long id) throws Exception {
 		
 		productRepository.deleteById(id);
-		Optional<Product> product = productRepository.findById(id);
-		if (productRepository.existsById(product.get().getId()) == false) {
+		
+		if (productRepository.existsById(id) == false) {
 			
 			LOGGER.info("Delete was successful");
-			Utils.createActivity(ActivityTypeEnum.DELETE, "product with id " + product.get().getId()+  " deleted");
+			activityService.createActivity(ActivityTypeEnum.DELETE, "product with id " +id+  " deleted");
 		}
 		else
-			LOGGER.warning("Delete has failed for user: " + product.get().getId());
+			LOGGER.warning("Delete has failed for user: " + id);
 	}
 
 

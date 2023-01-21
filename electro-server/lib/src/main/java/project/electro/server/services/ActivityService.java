@@ -1,5 +1,6 @@
 package project.electro.server.services;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import project.electro.server.dtos.ActivityDto;
 import project.electro.server.entities.Activity;
+import project.electro.server.enums.ActivityTypeEnum;
 import project.electro.server.repository.ActivityRepository;
 
 @Service
@@ -54,6 +56,15 @@ public class ActivityService {
 			LOGGER.warning("Delete has failed for activity with id: " + activity.get().getId());
 		
 	}
+	public void createActivity(ActivityTypeEnum type, String description) throws Exception {
+		
+		Activity activity = new Activity();
+		activity.setActivityType(type);
+		activity.setCreatedDate(LocalDateTime.now());
+		activity.setDescription(description);
+		activityRepository.save(activity);
+		
+	}
 
 	private ActivityDto convertToActivityDto(Activity activity) {
 		ActivityDto activityDto = new ActivityDto();
@@ -61,6 +72,6 @@ public class ActivityService {
 		activityDto.setCreatedDate(activity.getCreatedDate());
 		activityDto.setDescription(activity.getDescription());
 		activityDto.setId(activity.getId());
-		return null;
+		return activityDto;
 	}
 }
