@@ -1,5 +1,18 @@
 <title>Home</title>
 <div>
+  <p-carousel [value]="products" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+    <ng-template pTemplate="header">
+    </ng-template>
+    <ng-template let-product pTemplate="item">
+      <div class="product-item">
+        <div class="product-item-content">
+          <div class="mb-3">
+            <img src="../../../assets/car/{{product}}" alt="img" class="product-image" />
+        </div>
+      </div>
+      </div>
+    </ng-template>
+  </p-carousel>
   <button pButton label="Sign in" icon="pi pi-chevron-circle-right" iconPos="right" routerLink="/login" *ngIf="!isUserLogged"></button>
   <button pButton label="Get Started" icon="pi pi-chevron-circle-right" iconPos="right" routerLink="/products" *ngIf="isUserLogged"></button>
 </div>

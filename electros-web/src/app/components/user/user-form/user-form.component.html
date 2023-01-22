@@ -80,7 +80,7 @@
         <input id="age" type="text" required pInputText formControlName="age">
       </div>
       <div class="buttons-container">
-        <button pButton pRipple type="button" label="Cancel" routerLink="/user/account-details"></button>
+        <button pButton pRipple type="button" label="Cancel" routerLink="/home"></button>
         <button pButton pRipple type="button" label="Create" (click)="create()" [disabled]="formValidation==='INVALID' || userForm.controls.password.value != userForm.controls.confirmPassword.value" *ngIf="accountDetailsType == null"></button>
         <button pButton pRipple type="button" label="Save" (click)="save()" [disabled]="formValidation==='INVALID' || userForm.controls.password.value != userForm.controls.confirmPassword.value" *ngIf="!!accountDetailsType"></button>
       </div>

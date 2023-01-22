@@ -6,16 +6,16 @@ form {
   display: grid;
   grid-gap: 1rem;
   .heading-container{
-    background-color: dodgerblue;
+    background-color: rgb(245, 149, 24);
     border-radius: 15px;
     div{
       width: 45%;
       padding: 0.2rem 0;
-      background-color: #22baff;
+      background-color:  #f4f4f4;
       border-top-right-radius: 40px;
       border-bottom-left-radius: 50px;
       h1{
-        color: white;
+        color: black;
       }
     }
   }

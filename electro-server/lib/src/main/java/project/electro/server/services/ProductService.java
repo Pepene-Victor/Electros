@@ -59,7 +59,7 @@ public class ProductService {
 		
 		if(file != null){
 			try {
-				productDto.setImage(Base64.getEncoder().encode(file.getBytes()));
+				productDto.setImage(file.getBytes());
 			}catch(IOException e) {
 				
 				e.printStackTrace();
@@ -92,13 +92,17 @@ public class ProductService {
 		
 		productRepository.deleteById(id);
 		
-		if (productRepository.existsById(id) == false) {
+		if (existsById(id) == false) {
 			
 			LOGGER.info("Delete was successful");
 			activityService.createActivity(ActivityTypeEnum.DELETE, "product with id " +id+  " deleted");
 		}
 		else
 			LOGGER.warning("Delete has failed for user: " + id);
+	}
+	
+	public boolean existsById(Long id){
+		return productRepository.existsById(id);
 	}
 
 

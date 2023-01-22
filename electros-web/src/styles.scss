@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+
 body {
   background-color: #FAF9F8;
-
+  margin: 0;
+  position: relative;
+  min-height: 100vh;
 }
 .p-ripple.green .p-ink {
   background: rgba(0, 255, 00, 0.9);
@@ -19,3 +22,4 @@ i{
   padding: 10px;
   cursor: pointer;
 }
+

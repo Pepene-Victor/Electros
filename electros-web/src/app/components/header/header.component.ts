@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
   isAdmin: boolean = false;
   navItems: MenuItem [] = [];
   navItemsAdmin: MenuItem [] = [];
+  defNavItems: MenuItem [] = [];
   constructor(private _router: Router,
               private _http: HttpClient,
               private _loginService: AuthService,
@@ -42,7 +43,7 @@ export class HeaderComponent implements OnInit {
       },
       {
         label: 'Cart',
-        icon: 'pi-shopping-cart',
+        icon: 'pi pi-shopping-cart',
         routerLink: 'user/cart'
       },
       {
@@ -69,6 +70,18 @@ export class HeaderComponent implements OnInit {
       }
 
     ];
+    this.defNavItems = [
+      {
+        label: 'Products',
+        icon: 'pi pi-chevron-right',
+        routerLink: '/products',
+      },
+      {
+        label: 'Cart',
+        icon: 'pi pi-shopping-cart',
+        routerLink: 'user/cart'
+      }
+      ];
     this._subscriptions.push(this._userService.getLoggedUserUsingGET().subscribe({
       next: (user: UserDto) => {
         this.isUserLogged = true;

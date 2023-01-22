@@ -1,16 +1,16 @@
 .main{
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background-color: rgb(84, 152, 218);
-  padding: 0 0 0 30px;
+  background-color: rgb(245, 149, 24,0.8);
   display: flex;
   gap: 20px;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  left: 0;
   h3{
-      color: white;
+      color: black;
   }
   h4{
-      color: white;
+      color: black;
   }
 
 }

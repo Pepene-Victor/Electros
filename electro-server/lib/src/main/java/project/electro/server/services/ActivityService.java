@@ -47,16 +47,22 @@ public class ActivityService {
 	public void delete(Long id) {
 		
 		activityRepository.deleteById(id);
-		Optional<Activity> activity = activityRepository.findById(id);
-		if (activityRepository.existsById(activity.get().getId()) == false) {
+		if (this.existsById(id) == false) {
 			
 			LOGGER.info("Delete was successful");
 		}
 		else
-			LOGGER.warning("Delete has failed for activity with id: " + activity.get().getId());
+			LOGGER.warning("Delete has failed for activity with id: " +id);
 		
 	}
-	public void createActivity(ActivityTypeEnum type, String description) throws Exception {
+	
+	public boolean existsById(Long id) {
+		
+		return activityRepository.existsById(id);
+		
+	}
+	
+	public ActivityDto createActivity(ActivityTypeEnum type, String description) throws Exception {
 		
 		Activity activity = new Activity();
 		activity.setActivityType(type);
@@ -64,6 +70,7 @@ public class ActivityService {
 		activity.setDescription(description);
 		activityRepository.save(activity);
 		
+		return convertToActivityDto(activity);
 	}
 
 	private ActivityDto convertToActivityDto(Activity activity) {

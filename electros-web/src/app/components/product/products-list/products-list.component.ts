@@ -19,6 +19,7 @@ export class ProductsListComponent implements OnInit {
   productDialog: boolean = false;
   rows:number = 0;
   isAdmin:boolean = false;
+  productImage: any;
   constructor(private _fb: FormBuilder, private _productService: ProductControllerService,
               private _confirmationService: ConfirmationService, private _messageService: MessageService,
               private _router: Router, private _userService: UserControllerService) {
@@ -33,10 +34,15 @@ export class ProductsListComponent implements OnInit {
       pageNumber: 0
     }
     this._subscriptions.push(this._productService.getAllUsingGET1(params).subscribe((products: ProductDto[]) =>{
+      products.forEach((product: ProductDto) =>{
+      })
       this.products = products;
       this.rows = params.pageSize;
+
     }));
     this.productsToOrder = this._productService.getProductsToOrder();
+
+
   }
 
   ngOnDestroy(){
@@ -45,6 +51,8 @@ export class ProductsListComponent implements OnInit {
     })
     this._productService.setProductsToOrder(this.productsToOrder)
   }
+
+
 
   getValue(event: Event): string {
     return (event.target as HTMLInputElement).value;

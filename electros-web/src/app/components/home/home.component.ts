@@ -12,9 +12,31 @@ import {UserDto} from "../../api/models/user-dto";
 export class HomeComponent implements OnInit {
   private _subscriptions: Subscription[] = [];
   isUserLogged: boolean = false;
+  cars: any;
+  responsiveOptions;
+  products: any [] = ["p1.jpeg","p2.jpeg","p3.jpeg","p4.jpeg","p5.jpeg","p6.jpeg","p7.jpeg","p8.jpeg","p9.jpeg"];
 
   constructor(private _userService: UserControllerService,
-              private _router: Router) { }
+              private _router: Router) {
+
+    this.responsiveOptions = [
+      {
+        breakpoint: '560px',
+        numVisible: 3,
+        numScroll: 3
+      },
+      {
+        breakpoint: '768px',
+        numVisible: 2,
+        numScroll: 2
+      },
+      {
+        breakpoint: '560px',
+        numVisible: 1,
+        numScroll: 1
+      }
+    ];
+  }
 
   ngOnInit(): void {
     this._subscriptions.push(this._userService.getLoggedUserUsingGET().subscribe({

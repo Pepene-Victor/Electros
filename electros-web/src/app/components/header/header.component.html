@@ -6,4 +6,7 @@
     <p-menubar [model]="navItemsAdmin" *ngIf="isUserLogged && isAdmin">
       <button pButton label="Logout" icon="pi pi-sign-out" routerLink="/home" (click)="onLogout()"></button>
     </p-menubar>
+  <p-menubar [model]="defNavItems" *ngIf="!isUserLogged">
+    <button pButton label="Login" icon="pi pi-sign-in" routerLink="/login"></button>
+  </p-menubar>
 </div>

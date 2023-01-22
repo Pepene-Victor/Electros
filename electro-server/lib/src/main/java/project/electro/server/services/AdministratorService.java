@@ -93,5 +93,9 @@ public class AdministratorService implements BaseUserEntityService<Administrator
 		adminDto.setId(administrator.getId());
 		return adminDto;
 	}
+	public void delete(Long id) {
+		administratorRepository.deleteById(id);
+		
+	}
 	
 }

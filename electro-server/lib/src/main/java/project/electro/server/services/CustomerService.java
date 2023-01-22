@@ -68,6 +68,10 @@ public class CustomerService implements BaseUserEntityService<CustomerDto>{
 		return null;
 
 	}
+	public void delete(Long id) {
+		
+		this.customerRepository.deleteById(id);
+	}
 	
 	private CustomerDto convertToCustomerDto(Customer customer) {
 		CustomerDto customerDto = new CustomerDto();

@@ -14,6 +14,7 @@
   <ng-template pTemplate="header">
     <tr>
       <th>Id</th>
+      <th></th>
       <th>Name</th>
       <th>Price</th>
       <th>Stock</th>
@@ -28,6 +29,7 @@
   <ng-template pTemplate="body" let-product>
     <tr>
       <td>{{product.id}}</td>
+      <td><img alt="image" src="data:image/png;base64, {{product.image}}"></td>
       <td>{{product.productName}}</td>
       <td>{{product.price}}</td>
       <td>{{product.stock}}</td>

@@ -23,6 +23,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { interceptorProviders } from './interceptors/interceptors';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import {CarouselModule} from "primeng/carousel";
 
 // @ts-ignore
 @NgModule({
@@ -34,24 +35,25 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     HomeComponent,
     RegisterComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CommonModule,
-    AccordionModule,
-    InputTextModule,
-    ButtonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    FormsModule,
-    UserModule,
-    RippleModule,
-    ProductModule,
-    BrowserAnimationsModule,
-    ToastModule,
-    StepsModule,
-    MenubarModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        CommonModule,
+        AccordionModule,
+        InputTextModule,
+        ButtonModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        FormsModule,
+        UserModule,
+        RippleModule,
+        ProductModule,
+        BrowserAnimationsModule,
+        ToastModule,
+        StepsModule,
+        MenubarModule,
+        CarouselModule
+    ],
   providers: [
     interceptorProviders,
     ConfirmationService,

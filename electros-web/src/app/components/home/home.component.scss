@@ -1,13 +1,28 @@
 div{
-  margin: 0 auto;
-  display: grid;
-  grid-gap: 2rem;
-  padding: 5rem;
-  img{
-    width: 50%;
-  }
+  width: 90%;
+  display: flex;           /* establish flex container */
+  flex-direction: column;  /* make main axis vertical */
+  justify-content: center; /* center items vertically, in this case */
+  align-items: center;     /* center items horizontally, in this case */
+
   button{
-    width: 15%;
+    width: 20%;
     background-color: dodgerblue;
+  }
+}
+.product-item {
+
+  .product-item-content {
+
+    border: 1px solid var(--surface-d);
+    border-radius: 3px;
+    margin: .01rem;
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .product-image {
+    width: 100%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
   }
 }
